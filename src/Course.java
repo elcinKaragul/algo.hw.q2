@@ -1,8 +1,8 @@
 //
 // Title: Course Class
-// Author: [Your Name/Surname]
-// ID: [Your ID]
-// Section: [Your Section]
+// Author: [Elçin Karagül-Kayra Arı]
+// ID: [10885319050-10001507]
+// Section: [04]
 // Assignment: 4
 // Description: This class represents a course in the system. It stores the
 //              course number, the LoH values of enrolled students, and provides
