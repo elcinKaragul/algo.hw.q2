@@ -1,8 +1,8 @@
 //
 // Title: Course Selection System Tester Class
-// Author: [Your Name/Surname]
-// ID: [Your ID]
-// Section: [Your Section]
+// Author: [Elçin Karagül-Kayra Arı]
+// ID: [10885319050-10001507]
+// Section: [04]
 // Assignment: 4
 // Description: This class reads the input data for the course selection system,
 //              creates the courses, enrolls the previously registered students,
