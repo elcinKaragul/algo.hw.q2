@@ -15,68 +15,74 @@ import java.util.Scanner;
 public class Main {
 
     //
-    // Summary: Reads the input, initializes the system, performs the course
-    //          selection process for Bill and his friends, and prints the results.
+    // Summary: Reads the input, initializes the system, performs the course selection process for Bill and his friends, and prints the results.
     // Precondition: Input is provided in the correct format.
     // Postcondition: The selected course numbers are printed to the screen.
     //
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
 
-        // Read the number of courses, total number of people, and
-        // number of previously enrolled students.
-        int C = scanner.nextInt();
-        int P = scanner.nextInt();
-        int N = scanner.nextInt();
+        // Read the number of courses, total number of people, and number of previously enrolled students.
+        int courseCount = input.nextInt();
+        int peopleCount = input.nextInt();
+        int enrolledCount = input.nextInt();
 
         // Create course objects from course 1 to course C.
         // The array is created as 1-indexed for easier course access.
-        Course[] courses = new Course[C + 1];
-        for (int i = 1; i <= C; i++) {
-            courses[i] = new Course(i);
+        Course[] courses = new Course[courseCount + 1];
+
+        for (int courseNo = 1; courseNo <= courseCount; courseNo++) {
+            courses[courseNo] = new Course(courseNo);
         }
 
         // Enroll the previously registered students.
         // The i-th student is assigned to course (i % C) + 1.
-        for (int i = 0; i < N; i++) {
-            int loh = scanner.nextInt();
-            int courseNum = (i % C) + 1;
-            courses[courseNum].enrollStudent(loh);
+        for (int studentIndex = 0; studentIndex < enrolledCount; studentIndex++) {
+            int lohVal = input.nextInt();
+            int courseNo = (studentIndex % courseCount) + 1;
+
+            courses[courseNo].enrollStudent(lohVal);
         }
 
         // Read the LoH values of Bill and his friends.
-        int[] billAndFriends = new int[P];
-        for (int i = 0; i < P; i++) {
-            billAndFriends[i] = scanner.nextInt();
+        int[] groupLoHVals = new int[peopleCount];
+
+        for (int personIndex = 0; personIndex < peopleCount; personIndex++) {
+            groupLoHVals[personIndex] = input.nextInt();
         }
 
         // Create a min-heap and insert all courses into it.
-        Heap courseHeap = new Heap(C);
-        for (int i = 1; i <= C; i++) {
-            courseHeap.insert(courses[i]);
+        Heap courseHeap = new Heap(courseCount);
+
+        for (int courseNo = 1; courseNo <= courseCount; courseNo++) {
+            courseHeap.insert(courses[courseNo]);
         }
 
         // Store the selected course numbers.
-        int[] result = new int[P];
+        int[] selectedCourses = new int[peopleCount];
 
         // Process Bill and his friends one by one.
         // Each time, the course with minimum z value is selected.
-        for (int i = 0; i < P; i++) {
-            Course selectedCourse = courseHeap.deleteMin();
-            result[i] = selectedCourse.courseNumber;
-            selectedCourse.enrollStudent(billAndFriends[i]);
-            courseHeap.insert(selectedCourse);
+        for (int personIndex = 0; personIndex < peopleCount; personIndex++) {
+            Course minCourse = courseHeap.deleteMin();
+
+            selectedCourses[personIndex] = minCourse.courseNumber;
+            minCourse.enrollStudent(groupLoHVals[personIndex]);
+
+            courseHeap.insert(minCourse);
         }
 
         // Print the selected course numbers.
-        for (int i = 0; i < P; i++) {
-            System.out.print(result[i]);
-            if (i < P - 1) {
+        for (int personIndex = 0; personIndex < peopleCount; personIndex++) {
+            System.out.print(selectedCourses[personIndex]);
+
+            if (personIndex < peopleCount - 1) {
                 System.out.print(" ");
             }
         }
+
         System.out.println();
 
-        scanner.close();
+        input.close();
     }
 }
